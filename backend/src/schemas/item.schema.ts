@@ -1,24 +1,32 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
+import { User } from './user.schema';
 
 export type ItemDocument = Item & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Item {
   @Prop({ required: true, type: String })
   name: string;
 
-  @Prop({ required: true, default: 'On-going' })
+  @Prop({ default: 'Draft' })
   status: string;
 
-  @Prop({ type: Number })
+  @Prop({ required: true, type: Number })
   startPrice: number;
 
-  @Prop({ type: Number })
+  @Prop({ type: Number, default: 0 })
   currentPrice: number;
 
-  @Prop({ type: Number })
-  duration: number;
+  @Prop({ required: true, type: Date })
+  duration: Date;
+
+  @Prop({
+    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: User.name,
+  })
+  author: User;
 }
 
 export const ItemSchema = SchemaFactory.createForClass(Item);

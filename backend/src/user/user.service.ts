@@ -14,7 +14,6 @@ export class UserService {
   async register(userRegister: UserDto): Promise<UserDocument> {
     return await new this.model({
       ...userRegister,
-      createdAt: new Date(),
     }).save();
   }
 
