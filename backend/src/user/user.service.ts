@@ -16,4 +16,8 @@ export class UserService {
       createdAt: new Date(),
     }).save();
   }
+
+  async findOne(email: string): Promise<UserDocument> {
+    return await this.model.findOne({ email }).exec();
+  }
 }

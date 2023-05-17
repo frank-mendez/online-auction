@@ -10,7 +10,7 @@ import { UserDto } from './dto/user-dto';
 import { UserDocument } from 'src/schemas/user.schema';
 import * as bcrypt from 'bcryptjs';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
