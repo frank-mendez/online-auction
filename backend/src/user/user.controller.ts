@@ -4,12 +4,14 @@ import {
   Body,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto } from './dto/user-dto';
 import { UserDocument } from 'src/schemas/user.schema';
 import * as bcrypt from 'bcryptjs';
 import { UserDepositDto } from './dto/user-deposit-dto';
+import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
 
 @Controller('users')
 export class UserController {
@@ -29,6 +31,7 @@ export class UserController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('deposit')
   async deposit(@Body() userDepositDto: UserDepositDto): Promise<UserDocument> {
     try {
