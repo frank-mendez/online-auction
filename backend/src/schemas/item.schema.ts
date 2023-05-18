@@ -27,6 +27,12 @@ export class Item {
     ref: User.name,
   })
   author: User;
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: User.name,
+  })
+  currentBidder: User;
 }
 
 export const ItemSchema = SchemaFactory.createForClass(Item);
