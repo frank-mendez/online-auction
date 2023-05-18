@@ -8,10 +8,10 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto } from './dto/user-dto';
-import { UserDocument } from 'src/schemas/user.schema';
 import * as bcrypt from 'bcryptjs';
 import { UserDepositDto } from './dto/user-deposit-dto';
-import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
+import { JwtAuthGuard } from '../auth/jwt.auth.guard';
+import { UserDocument } from '../schemas/user.schema';
 
 @Controller('users')
 export class UserController {

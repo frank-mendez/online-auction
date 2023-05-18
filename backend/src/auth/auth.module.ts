@@ -1,5 +1,5 @@
+import { User, UserSchema } from './../schemas/user.schema';
 import { PassportModule } from '@nestjs/passport';
-import { User, UserSchema } from 'src/schemas/user.schema';
 import { UserService } from './../user/user.service';
 import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';

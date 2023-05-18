@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsNumber, IsString, Min } from 'class-validator';
-import { User } from 'src/schemas/user.schema';
+import { User } from '../../schemas/user.schema';
 
 export class BidItemDto {
   @IsNotEmpty()

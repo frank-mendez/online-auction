@@ -1,3 +1,4 @@
+import { JwtAuthGuard } from './../auth/jwt.auth.guard';
 import {
   Controller,
   Post,
@@ -8,11 +9,10 @@ import {
   Get,
   Param,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
 import { ItemService } from './item.service';
 import { AddItemDto } from './dto/add-item-dto';
-import { ItemDocument } from 'src/schemas/item.schema';
 import { BidItemDto } from './dto/bid-item-dto';
+import { ItemDocument } from '../schemas/item.schema';
 
 @Controller('item')
 export class ItemController {
