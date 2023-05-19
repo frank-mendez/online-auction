@@ -1,4 +1,4 @@
-import { UserDocument } from './../schemas/user.schema';
+import { User, UserDocument } from './../schemas/user.schema';
 import { AuthDto } from './dto/auth.dto';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { Strategy } from 'passport-local';
@@ -15,7 +15,10 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(username: string, password: string): Promise<UserDocument> {
+  async validate(
+    username: string,
+    password: string,
+  ): Promise<UserDocument | User> {
     const validatePayload = new AuthDto();
     validatePayload.username = username;
     validatePayload.password = password;

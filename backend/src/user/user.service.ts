@@ -11,17 +11,17 @@ export class UserService {
     @InjectModel(User.name) private readonly model: Model<UserDocument>,
   ) {}
 
-  async register(userRegister: UserDto): Promise<UserDocument> {
+  async register(userRegister: UserDto): Promise<UserDocument | User> {
     return await new this.model({
       ...userRegister,
     }).save();
   }
 
-  async findOne(email: string): Promise<UserDocument> {
+  async findOne(email: string): Promise<UserDocument | User> {
     return await this.model.findOne({ email }).exec();
   }
 
-  async deposit(userDepositDto: UserDepositDto): Promise<UserDocument> {
+  async deposit(userDepositDto: UserDepositDto): Promise<UserDocument | User> {
     const user = await this.model.findById(userDepositDto.id);
     if (user.balance) {
       const balance = user.balance + userDepositDto.deposit;

@@ -11,14 +11,14 @@ import { UserDto } from './dto/user-dto';
 import * as bcrypt from 'bcryptjs';
 import { UserDepositDto } from './dto/user-deposit-dto';
 import { JwtAuthGuard } from '../auth/jwt.auth.guard';
-import { UserDocument } from '../schemas/user.schema';
+import { User, UserDocument } from '../schemas/user.schema';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  async register(@Body() userDto: UserDto): Promise<UserDocument> {
+  async register(@Body() userDto: UserDto): Promise<UserDocument | User> {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(userDto.password, salt);
     userDto.password = hashedPassword;
@@ -33,7 +33,9 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Post('deposit')
-  async deposit(@Body() userDepositDto: UserDepositDto): Promise<UserDocument> {
+  async deposit(
+    @Body() userDepositDto: UserDepositDto,
+  ): Promise<UserDocument | User> {
     try {
       const user = await this.userService.deposit(userDepositDto);
       return user;
