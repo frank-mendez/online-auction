@@ -18,8 +18,8 @@ export class Item {
   @Prop({ type: Number, default: 0 })
   currentPrice: number;
 
-  @Prop({ required: true, type: Date })
-  duration: Date;
+  @Prop({ required: true, type: String })
+  duration: string;
 
   @Prop({
     required: true,

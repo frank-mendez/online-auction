@@ -1,4 +1,5 @@
 import { IsDate, IsNotEmpty, IsNumber, IsString, Min } from 'class-validator';
+import { User } from '../../schemas/user.schema';
 
 export class AddItemDto {
   @IsNotEmpty()
@@ -10,9 +11,9 @@ export class AddItemDto {
   startPrice: number;
 
   @IsNotEmpty()
-  duration: Date;
+  duration: string;
 
   @IsNotEmpty()
   @IsString()
-  author: string;
+  author: User;
 }
