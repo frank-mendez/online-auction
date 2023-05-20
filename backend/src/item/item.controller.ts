@@ -12,7 +12,7 @@ import {
 import { ItemService } from './item.service';
 import { AddItemDto } from './dto/add-item-dto';
 import { BidItemDto } from './dto/bid-item-dto';
-import { ItemDocument } from '../schemas/item.schema';
+import { Item, ItemDocument } from '../schemas/item.schema';
 
 @Controller('item')
 export class ItemController {
@@ -20,7 +20,7 @@ export class ItemController {
 
   @UseGuards(JwtAuthGuard)
   @Post('create')
-  async create(@Body() addItemDto: AddItemDto): Promise<ItemDocument> {
+  async create(@Body() addItemDto: AddItemDto): Promise<ItemDocument | Item> {
     try {
       const item = await this.itemService.createItem(addItemDto);
       return item;
@@ -31,7 +31,7 @@ export class ItemController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async getUserItem(@Param('id') id: string): Promise<ItemDocument[]> {
+  async getUserItem(@Param('id') id: string): Promise<ItemDocument[] | Item[]> {
     try {
       const items = await this.itemService.getAllUserItem(id);
       return items;
@@ -42,7 +42,7 @@ export class ItemController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  async getAllItems(): Promise<ItemDocument[]> {
+  async getAllItems(): Promise<ItemDocument[] | Item[]> {
     try {
       const items = await this.itemService.getAllItems();
       return items;
@@ -53,7 +53,7 @@ export class ItemController {
 
   @UseGuards(JwtAuthGuard)
   @Post('bid')
-  async bid(@Body() bidItemDto: BidItemDto): Promise<ItemDocument> {
+  async bid(@Body() bidItemDto: BidItemDto): Promise<ItemDocument | Item> {
     try {
       const item = await this.itemService.bidItem(bidItemDto);
       return item;

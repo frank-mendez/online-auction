@@ -1,14 +1,15 @@
+import { User } from '../schemas/user.schema';
 import { Item, ItemDocument } from '../schemas/item.schema';
 import { UserDocumentStub } from '../user/user-stub-dto';
 import { AddItemDto } from './dto/add-item-dto';
 import { BidItemDto } from './dto/bid-item-dto';
 
-export const ItemStubDto = (): AddItemDto => {
+export const ItemStubDto = (user?: User): AddItemDto => {
   return {
     name: 'Test Item',
     startPrice: 200,
     duration: '1h',
-    author: UserDocumentStub(),
+    author: user ? user : UserDocumentStub(),
   };
 };
 

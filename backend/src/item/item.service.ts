@@ -13,24 +13,24 @@ export class ItemService {
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
 
-  async createItem(addItemDto: AddItemDto): Promise<ItemDocument> {
+  async createItem(addItemDto: AddItemDto): Promise<ItemDocument | Item> {
     return await new this.model({
       ...addItemDto,
     }).save();
   }
 
-  async getAllUserItem(id: string): Promise<ItemDocument[]> {
+  async getAllUserItem(id: string): Promise<ItemDocument[] | Item[]> {
     return await this.model
       .find({ author: id })
       .populate('author', ['email'])
       .exec();
   }
 
-  async getAllItems(): Promise<ItemDocument[]> {
+  async getAllItems(): Promise<ItemDocument[] | Item[]> {
     return await this.model.find().populate('author', ['email']).exec();
   }
 
-  async bidItem(bidItemDto: BidItemDto): Promise<ItemDocument> {
+  async bidItem(bidItemDto: BidItemDto): Promise<ItemDocument | Item> {
     const item = await this.model.findById(bidItemDto.itemId);
     const user = await this.userModel.findById(bidItemDto.bidder);
     if (item.currentBidder === bidItemDto.bidder) {
