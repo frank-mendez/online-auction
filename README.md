@@ -69,29 +69,137 @@ Start the server
 
 ## API Reference
 
-#### Get all items
+### Register User
 
 ```http
-  GET /api/items
+  POST /users
 ```
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
+| Parameter  | Type     | Description                 |
+| :--------- | :------- | :-------------------------- |
+| `email`    | `string` | **Required**. Unique email  |
+| `password` | `string` | **Required**. Your password |
 
-#### Get item
+#### Body
+
+```javascript
+{
+    "email": "test@gmail.com",
+    "password": "NrdI7YSla9NycalH!"
+}
+```
+
+#### Return
+
+```javascript
+{
+    "email": "test@gmail.com",
+    "_id": "646a268eb8403b240a721a67",
+    "createdAt": "2023-05-21T14:11:26.731Z",
+    "updatedAt": "2023-05-21T14:11:26.731Z",
+    "__v": 0
+}
+```
+
+### Login User
 
 ```http
-  GET /api/items/${id}
+  POST /auth/login
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of item to fetch |
+| Parameter  | Type     | Description                 |
+| :--------- | :------- | :-------------------------- |
+| `email`    | `string` | **Required**. Unique email  |
+| `password` | `string` | **Required**. Your password |
 
-#### add(num1, num2)
+#### Body
 
-Takes two numbers and returns the sum.
+```javascript
+{
+    "email": "test@gmail.com",
+    "password": "NrdI7YSla9NycalH!"
+}
+```
+
+#### Return
+
+```javascript
+{
+    "data": {
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOiI2NDZhMjY4ZWI4NDAzYjI0MGE3MjFhNjciLCJpYXQiOjE2ODQ2Nzg0OTEsImV4cCI6MTY4NDc2NDg5MX0.l321adVHdAQZSgQ8z3EMoljWci8FZBAS78ry_ikF6ME",
+        "email": "test@gmail.com",
+        "id": "646a268eb8403b240a721a67"
+    }
+}
+```
+
+### Deposit User
+
+```http
+  POST /users/deposit
+```
+
+| Header Authorization | Type     | Description       |
+| :------------------- | :------- | :---------------- |
+| `Bearer Token`       | `string` | **Required**. JWT |
+
+| Parameter | Type     | Description                            |
+| :-------- | :------- | :------------------------------------- |
+| `id`      | `string` | **Required**. User ID                  |
+| `deposit` | `number` | **Required**. Can have up to 2 decimal |
+
+### Create Bid Item
+
+```http
+  POST /item/create
+```
+
+| Header Authorization | Type     | Description       |
+| :------------------- | :------- | :---------------- |
+| `Bearer Token`       | `string` | **Required**. JWT |
+
+| Parameter    | Type     | Description                            |
+| :----------- | :------- | :------------------------------------- |
+| `name`       | `string` | **Required**. Name of item             |
+| `startPrice` | `number` | **Required**. Can have up to 2 decimal |
+| `duration`   | `string` | **Required**. e.g 1h                   |
+| `author`     | `string` | **Required**. User ID                  |
+
+### Get User Items
+
+```http
+  GET /item/{id}
+```
+
+| Header Authorization | Type     | Description       |
+| :------------------- | :------- | :---------------- |
+| `Bearer Token`       | `string` | **Required**. JWT |
+
+### Get All Items
+
+```http
+  GET /item
+```
+
+| Header Authorization | Type     | Description       |
+| :------------------- | :------- | :---------------- |
+| `Bearer Token`       | `string` | **Required**. JWT |
+
+### Bid Items
+
+```http
+  POST /item
+```
+
+| Header Authorization | Type     | Description       |
+| :------------------- | :------- | :---------------- |
+| `Bearer Token`       | `string` | **Required**. JWT |
+
+| Parameter  | Type     | Description                            |
+| :--------- | :------- | :------------------------------------- |
+| `itemId`   | `string` | **Required**. Item ID                  |
+| `bidPrice` | `number` | **Required**. Can have up to 2 decimal |
+| `bidderId` | `string` | **Required**. User ID                  |
 
 ## Running Tests
 
@@ -133,3 +241,13 @@ Install my-project with npm
 ## Screenshots
 
 ![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+
+## Usage/Examples
+
+```javascript
+import Component from 'my-project'
+
+function App() {
+	return <Component />
+}
+```
