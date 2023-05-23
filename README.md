@@ -21,6 +21,8 @@ An online auction system where users can create and bid on items.
 
 To run this project, you will need to add the following environment variables to your .env file
 
+#### Backend
+
 Go to the `Backend` directory and add `.env` file
 
 ```bash
@@ -34,6 +36,16 @@ Go to the `Backend` directory and add `.env` file
 `MONGODB_NAME=OnlineAuction`
 
 `JWT_SECRET=78a59991-02e4-4b20-8dad-98dd21086ad4`
+
+#### Frontend
+
+Go to the `client` directory and add `.env` file
+
+```bash
+  cd client
+```
+
+`REACT_APP_API_URL=http://localhost:4000`
 
 ## Run Locally
 

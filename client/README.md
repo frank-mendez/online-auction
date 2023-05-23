@@ -1,242 +1,46 @@
-# Online Auction System
+# Getting Started with Create React App
 
-An online auction system where users can create and bid on items.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Features
+## Available Scripts
 
-- Authentication
-  - A user can register and use that to login.
-- Deposit money
-- Create a new item (name, started price and time window) in the draft state.
-  - An item need to be published to start an auction.
-- Get the list of completed/ongoing bid items
-- Can bid in each 5s and for published items (each user).
-  - A new bid has to have a higher price than the current highest bid and started price.
+In the project directory, you can run:
 
-## Authors
+### `npm start`
 
-- [@frankmendez](https://github.com/frank-mendez)
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Environment Variables
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-To run this project, you will need to add the following environment variables to your .env file
+### `npm test`
 
-#### Backend
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-Go to the `Backend` directory and add `.env` file
+### `npm run build`
 
-```bash
-  cd backend
-```
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-`APP_PORT=4000`
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-`MONGODB_URL=mongodb+srv://admin:NrdI7YSla9NycalH@cluster0.hawbf2o.mongodb.net/`
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-`MONGODB_NAME=OnlineAuction`
+### `npm run eject`
 
-`JWT_SECRET=78a59991-02e4-4b20-8dad-98dd21086ad4`
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-#### Frontend
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Go to the `client` directory and add `.env` file
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-```bash
-  cd client
-```
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-`REACT_APP_API_URL=http://localhost:4000`
+## Learn More
 
-## Run Locally
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-Clone the project
-
-```bash
-  git clone git@github.com:frank-mendez/online-auction.git
-```
-
-Go to the project directory
-
-```bash
-  cd online-auction
-```
-
-Go to the `Backend` directory
-
-```bash
-  cd backend
-```
-
-Install dependencies
-
-```bash
-  npm install
-```
-
-Start the server
-
-```bash
-  npm run start:dev
-```
-
-## API Reference
-
-### Register User
-
-```http
-  POST /users
-```
-
-| Parameter  | Type     | Description                 |
-| :--------- | :------- | :-------------------------- |
-| `email`    | `string` | **Required**. Unique email  |
-| `password` | `string` | **Required**. Your password |
-
-#### Body
-
-```javascript
-{
-    "email": "test@gmail.com",
-    "password": "NrdI7YSla9NycalH!"
-}
-```
-
-#### Return
-
-```javascript
-{
-    "email": "test@gmail.com",
-    "_id": "646a268eb8403b240a721a67",
-    "createdAt": "2023-05-21T14:11:26.731Z",
-    "updatedAt": "2023-05-21T14:11:26.731Z",
-    "__v": 0
-}
-```
-
-### Login User
-
-```http
-  POST /auth/login
-```
-
-| Parameter  | Type     | Description                 |
-| :--------- | :------- | :-------------------------- |
-| `email`    | `string` | **Required**. Unique email  |
-| `password` | `string` | **Required**. Your password |
-
-#### Body
-
-```javascript
-{
-    "email": "test@gmail.com",
-    "password": "NrdI7YSla9NycalH!"
-}
-```
-
-#### Return
-
-```javascript
-{
-    "data": {
-        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOiI2NDZhMjY4ZWI4NDAzYjI0MGE3MjFhNjciLCJpYXQiOjE2ODQ2Nzg0OTEsImV4cCI6MTY4NDc2NDg5MX0.l321adVHdAQZSgQ8z3EMoljWci8FZBAS78ry_ikF6ME",
-        "email": "test@gmail.com",
-        "id": "646a268eb8403b240a721a67"
-    }
-}
-```
-
-### Deposit User
-
-```http
-  POST /users/deposit
-```
-
-| Header Authorization | Type     | Description       |
-| :------------------- | :------- | :---------------- |
-| `Bearer Token`       | `string` | **Required**. JWT |
-
-| Parameter | Type     | Description                            |
-| :-------- | :------- | :------------------------------------- |
-| `id`      | `string` | **Required**. User ID                  |
-| `deposit` | `number` | **Required**. Can have up to 2 decimal |
-
-### Create Bid Item
-
-```http
-  POST /item/create
-```
-
-| Header Authorization | Type     | Description       |
-| :------------------- | :------- | :---------------- |
-| `Bearer Token`       | `string` | **Required**. JWT |
-
-| Parameter    | Type     | Description                            |
-| :----------- | :------- | :------------------------------------- |
-| `name`       | `string` | **Required**. Name of item             |
-| `startPrice` | `number` | **Required**. Can have up to 2 decimal |
-| `duration`   | `string` | **Required**. e.g 1h                   |
-| `author`     | `string` | **Required**. User ID                  |
-
-### Get User Items
-
-```http
-  GET /item/{id}
-```
-
-| Header Authorization | Type     | Description       |
-| :------------------- | :------- | :---------------- |
-| `Bearer Token`       | `string` | **Required**. JWT |
-
-### Get All Items
-
-```http
-  GET /item
-```
-
-| Header Authorization | Type     | Description       |
-| :------------------- | :------- | :---------------- |
-| `Bearer Token`       | `string` | **Required**. JWT |
-
-### Bid Items
-
-```http
-  POST /item
-```
-
-| Header Authorization | Type     | Description       |
-| :------------------- | :------- | :---------------- |
-| `Bearer Token`       | `string` | **Required**. JWT |
-
-| Parameter  | Type     | Description                            |
-| :--------- | :------- | :------------------------------------- |
-| `itemId`   | `string` | **Required**. Item ID                  |
-| `bidPrice` | `number` | **Required**. Can have up to 2 decimal |
-| `bidderId` | `string` | **Required**. User ID                  |
-
-## Running Tests
-
-To run tests, run the following command
-
-Go to the `Backend` directory
-
-```bash
-  cd backend
-```
-
-```bash
-  npm run test:watch
-```
-
-See to the `Backend` test coverage
-
-```bash
-  npm run test:cov
-```
-
-## Demo
-
-Insert gif or link to demo
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
+To learn React, check out the [React documentation](https://reactjs.org/).
