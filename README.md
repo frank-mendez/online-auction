@@ -228,26 +228,3 @@ Insert gif or link to demo
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
-
-## Installation
-
-Install my-project with npm
-
-```bash
-  npm install my-project
-  cd my-project
-```
-
-## Screenshots
-
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-
-## Usage/Examples
-
-```javascript
-import Component from 'my-project'
-
-function App() {
-	return <Component />
-}
-```
