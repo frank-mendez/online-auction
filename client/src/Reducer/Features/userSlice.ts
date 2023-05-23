@@ -21,7 +21,7 @@ export const userSlice = createSlice({
 			const { payload } = action
 
 			state.email = payload.data.email
-			state.balance = payload.data.balance
+			state.balance = payload.data.balance ? payload.data.balance : 0
 			state.itemsCreated = payload.data.itemsCreated
 		},
 	},
