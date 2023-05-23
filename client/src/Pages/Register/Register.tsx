@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Container, Typography, TextField } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { literal, object, string, TypeOf } from 'zod'
+import { object, string, TypeOf } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoadingButton } from '@mui/lab'
+import { useRegisterUserMutation } from '../../Reducer/Api/UserApi'
+import toast from 'react-hot-toast'
 
 const registerSchema = object({
 	email: string().nonempty('Email is required').email('Email is invalid'),
@@ -33,7 +35,7 @@ const styles = {
 }
 
 const Register = () => {
-	const [loading, setLoading] = useState(false)
+	const [registerUser, { isLoading, data }] = useRegisterUserMutation()
 	const {
 		register,
 		formState: { errors },
@@ -43,10 +45,26 @@ const Register = () => {
 		resolver: zodResolver(registerSchema),
 	})
 
-	const onSubmitHandler: SubmitHandler<RegisterInput> = (values) => {
-		setLoading(true)
-		console.log(values)
+	const onSubmitHandler: SubmitHandler<RegisterInput> = async (values) => {
+		try {
+			await registerUser(values).unwrap()
+		} catch (error: any) {
+			if (typeof error.data.message === 'string') {
+				toast.error('Email already in use')
+			} else {
+				for (let err of error.data.message) {
+					toast.error(err.charAt(0).toUpperCase() + err.slice(1))
+				}
+			}
+		}
 	}
+
+	useEffect(() => {
+		if (data) {
+			toast.success('User Registered')
+			reset()
+		}
+	}, [data])
 
 	return (
 		<Container maxWidth='xs' sx={styles.root}>
@@ -86,7 +104,7 @@ const Register = () => {
 					helperText={errors['password'] ? errors['password'].message : ''}
 					{...register('password')}
 				/>
-				<LoadingButton variant='contained' fullWidth type='submit' loading={loading} sx={{ py: '0.8rem', mt: '1rem' }}>
+				<LoadingButton variant='contained' fullWidth type='submit' loading={isLoading} sx={{ py: '0.8rem', mt: '1rem' }}>
 					Register
 				</LoadingButton>
 				<Link to={'/login'} children={<Typography>Already have an account?</Typography>} />
