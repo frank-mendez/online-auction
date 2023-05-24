@@ -261,3 +261,7 @@ Insert gif or link to demo
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
+## Screenshots
+
+![App Screenshot](https://prnt.sc/2hE3_HgLGi2-)
