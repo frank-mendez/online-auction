@@ -20,9 +20,14 @@ export const userSlice = createSlice({
 			state.email = payload.data.email
 			state.balance = payload.data.balance ? payload.data.balance : 0
 		},
+		setBalance: (state, action) => {
+			const { payload } = action
+
+			state.balance = payload.balance
+		},
 	},
 })
 
-export const { setUser } = userSlice.actions
+export const { setUser, setBalance } = userSlice.actions
 
 export default userSlice.reducer

@@ -28,13 +28,16 @@ function ResponsiveAppBar() {
 	}
 
 	const handleCloseUserMenu = (key: string) => {
-		console.log('key', key)
 		if (key === 'Logout') {
 			dispatch(logout())
 		}
 
 		if (key === 'Create New Item') {
 			navigate('/create-item')
+		}
+
+		if (key === 'Deposit') {
+			navigate('/deposit')
 		}
 		setAnchorElUser(null)
 	}

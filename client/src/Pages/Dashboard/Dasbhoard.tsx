@@ -1,4 +1,16 @@
-import { Button, Container, CssBaseline, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import {
+	Button,
+	CircularProgress,
+	Container,
+	CssBaseline,
+	Paper,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+} from '@mui/material'
 import React, { Fragment, useEffect, useState } from 'react'
 import ResponsiveAppBar from '../../Common/CommonAppBar'
 import { useGetAllItemsMutation } from '../../Reducer/Api/ItemApi'
@@ -55,25 +67,37 @@ const Dasbhoard = () => {
 						<TableHead>
 							<TableRow>
 								<TableCell>Name</TableCell>
-								<TableCell align='right'>Current Price</TableCell>
-								<TableCell align='right'>Duration</TableCell>
-								<TableCell align='right'>Bid</TableCell>
+								<TableCell>Current Price</TableCell>
+								<TableCell>Duration</TableCell>
+								<TableCell></TableCell>
 							</TableRow>
 						</TableHead>
-						<TableBody>
-							{rows.map((row) => (
-								<TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-									<TableCell component='th' scope='row'>
-										{row.name}
-									</TableCell>
-									<TableCell align='right'>{row.currentPrice}</TableCell>
-									<TableCell align='right'>{row.duration}</TableCell>
-									<TableCell align='right'>
-										<Button color='primary'>Bid</Button>
+						{isLoading ? (
+							<TableBody>
+								<TableRow>
+									<TableCell align='center' rowSpan={5}>
+										<CircularProgress />
 									</TableCell>
 								</TableRow>
-							))}
-						</TableBody>
+							</TableBody>
+						) : (
+							<TableBody>
+								{rows.map((row) => (
+									<TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+										<TableCell component='th' scope='row'>
+											{row.name}
+										</TableCell>
+										<TableCell>{row.currentPrice}</TableCell>
+										<TableCell>{row.duration}</TableCell>
+										<TableCell>
+											<Button variant='contained' color='primary'>
+												Bid
+											</Button>
+										</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						)}
 					</Table>
 				</TableContainer>
 			</Container>

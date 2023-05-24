@@ -21,7 +21,7 @@ const createItemSchema = object({
 type CreateItemInput = TypeOf<typeof createItemSchema>
 
 const CreateItem = () => {
-	const [createItem, { isLoading, data }] = useCreateItemMutation()
+	const [createItem, { isLoading, data, error }] = useCreateItemMutation()
 	const authUser = useSelector((state: RootState) => state.authUser)
 	const {
 		register,
@@ -45,7 +45,7 @@ const CreateItem = () => {
 			console.log('values', createDto)
 		} catch (error: any) {
 			if (typeof error.data.message === 'string') {
-				toast.error('Email already in use')
+				toast.error('Something went wrong')
 			} else {
 				for (let err of error.data.message) {
 					toast.error(err.charAt(0).toUpperCase() + err.slice(1))
@@ -60,6 +60,21 @@ const CreateItem = () => {
 			reset()
 		}
 	}, [data])
+
+	useEffect(() => {
+		if (error) {
+			if ('data' in error) {
+				const { message } = error.data as any
+				if (message === 'string') {
+					toast.error('Something went wrong')
+				} else if (message.length > 0) {
+					for (let err of message) {
+						toast.error(err.charAt(0).toUpperCase() + err.slice(1))
+					}
+				}
+			}
+		}
+	}, [error])
 
 	return (
 		<Fragment>
