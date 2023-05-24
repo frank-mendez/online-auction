@@ -26,6 +26,7 @@ export type RowData = {
 	status: string
 	currentBidder?: string | null
 	author: string
+	owner: string
 }
 
 const Dasbhoard = () => {
@@ -51,6 +52,7 @@ const Dasbhoard = () => {
 					currentPrice: item.currentPrice,
 					duration: item.duration,
 					author: item.author._id,
+					owner: item.author.email,
 				}
 			})
 			setRows(mappedItems)
@@ -71,6 +73,7 @@ const Dasbhoard = () => {
 								<TableCell>Current Price</TableCell>
 								<TableCell>Duration</TableCell>
 								<TableCell>Status</TableCell>
+								<TableCell>Owner</TableCell>
 								<TableCell></TableCell>
 							</TableRow>
 						</TableHead>
@@ -93,6 +96,7 @@ const Dasbhoard = () => {
 										<TableCell>{row.currentPrice}</TableCell>
 										<TableCell>{row.duration}</TableCell>
 										<TableCell>{row.status}</TableCell>
+										<TableCell>{row.owner}</TableCell>
 										<TableCell>
 											<Button disabled={row.status === 'Draft'} variant='contained' color='primary'>
 												Bid
