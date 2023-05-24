@@ -67,8 +67,10 @@ const Dasbhoard = () => {
 						<TableHead>
 							<TableRow>
 								<TableCell>Name</TableCell>
+								<TableCell>Start Price</TableCell>
 								<TableCell>Current Price</TableCell>
 								<TableCell>Duration</TableCell>
+								<TableCell>Status</TableCell>
 								<TableCell></TableCell>
 							</TableRow>
 						</TableHead>
@@ -87,10 +89,12 @@ const Dasbhoard = () => {
 										<TableCell component='th' scope='row'>
 											{row.name}
 										</TableCell>
+										<TableCell>{row.startPrice}</TableCell>
 										<TableCell>{row.currentPrice}</TableCell>
 										<TableCell>{row.duration}</TableCell>
+										<TableCell>{row.status}</TableCell>
 										<TableCell>
-											<Button variant='contained' color='primary'>
+											<Button disabled={row.status === 'Draft'} variant='contained' color='primary'>
 												Bid
 											</Button>
 										</TableCell>
