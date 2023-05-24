@@ -61,6 +61,8 @@ Go to the project directory
   cd online-auction
 ```
 
+### Backend
+
 Go to the `Backend` directory
 
 ```bash
@@ -77,6 +79,26 @@ Start the server
 
 ```bash
   npm run start:dev
+```
+
+### Frontend
+
+Go to the `client` directory
+
+```bash
+  cd client
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm start
 ```
 
 ## API Reference
@@ -138,8 +160,7 @@ Start the server
 ```javascript
 {
     "data": {
-        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOiI2NDZhMjY4ZWI4NDAzYjI0MGE3MjFhNjciLCJpYXQiOjE2ODQ2Nzg0OTEsImV4cCI6MTY4NDc2NDg5MX0.l321adVHdAQZSgQ8z3EMoljWci8FZBAS78ry_ikF6ME",
-        "email": "test@gmail.com",
+        "access_token": "",
         "id": "646a268eb8403b240a721a67"
     }
 }
