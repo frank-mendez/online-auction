@@ -1,16 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { Items } from './itemSlice'
 
 type UserState = {
 	balance: number
 	email: string
-	itemsCreated: Items[]
 }
 
 const initialState: UserState = {
 	email: '',
 	balance: 0,
-	itemsCreated: [],
 }
 
 export const userSlice = createSlice({
@@ -22,7 +19,6 @@ export const userSlice = createSlice({
 
 			state.email = payload.data.email
 			state.balance = payload.data.balance ? payload.data.balance : 0
-			state.itemsCreated = payload.data.itemsCreated
 		},
 	},
 })

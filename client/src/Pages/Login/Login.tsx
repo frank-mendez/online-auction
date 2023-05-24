@@ -9,6 +9,7 @@ import { useSubmitLoginMutation } from '../../Reducer/Api/AuthApi'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { setAuthUser } from '../../Reducer/Features/authSlice'
+import { setUser } from '../../Reducer/Features/userSlice'
 
 const styles = {
 	root: {
@@ -65,10 +66,10 @@ const Login = () => {
 
 	useEffect(() => {
 		if (data) {
-			toast.success('Sucess!')
+			toast.success('Welcome!')
 			reset()
-			console.log('data', data)
 			dispatch(setAuthUser(data))
+			dispatch(setUser(data))
 			navigate('/')
 		}
 	}, [data])

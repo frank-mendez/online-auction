@@ -3,6 +3,9 @@ import Dasbhoard from '../Pages/Dashboard/Dasbhoard'
 import Login from '../Pages/Login/Login'
 import Register from '../Pages/Register/Register'
 import { Route, Routes, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { RootState } from '../Reducer/Store'
+import ProtectedRoutes from './ProtectedRoutes'
 
 interface RouteItem {
 	path: string
@@ -10,8 +13,9 @@ interface RouteItem {
 }
 
 const MainRoutes = () => {
+	const authUser = useSelector((state: RootState) => state.authUser)
 	const rotues: RouteItem[] = [
-		{ path: '/', element: <Dasbhoard /> },
+		{ path: '/', element: <ProtectedRoutes isAuthenticated={authUser.isAuthenticated} children={<Dasbhoard />} /> },
 		{ path: '/login', element: <Login /> },
 		{ path: '/register', element: <Register /> },
 	]

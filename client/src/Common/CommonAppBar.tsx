@@ -1,22 +1,18 @@
 import * as React from 'react'
-import AppBar from '@mui/material/AppBar'
-import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import Menu from '@mui/material/Menu'
+import { AppBar, Avatar, Box, Container, Divider, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
-import Container from '@mui/material/Container'
-import Avatar from '@mui/material/Avatar'
-import Tooltip from '@mui/material/Tooltip'
-import MenuItem from '@mui/material/MenuItem'
-import AdbIcon from '@mui/icons-material/Adb'
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../Reducer/Store'
+import { logout } from '../Reducer/Features/authSlice'
 
 const settings = ['Create New Item', 'Deposit', 'Logout']
 
 function ResponsiveAppBar() {
-	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
-	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
+	const dispatch = useDispatch()
+	const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
+	const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
+	const user = useSelector((state: RootState) => state.userDetails)
 
 	const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorElNav(event.currentTarget)
@@ -31,6 +27,9 @@ function ResponsiveAppBar() {
 
 	const handleCloseUserMenu = (key: string) => {
 		console.log('key', key)
+		if (key === 'Logout') {
+			dispatch(logout())
+		}
 		setAnchorElUser(null)
 	}
 
@@ -84,28 +83,14 @@ function ResponsiveAppBar() {
 							}}
 						></Menu>
 					</Box>
-					<Typography
-						variant='h5'
-						noWrap
-						component='a'
-						href=''
-						sx={{
-							mr: 2,
-							display: { xs: 'flex', md: 'none' },
-							flexGrow: 1,
-							fontFamily: 'monospace',
-							fontWeight: 700,
-							color: 'inherit',
-							textDecoration: 'none',
-						}}
-					>
-						Online Auction
-					</Typography>
 					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}></Box>
 					<Box sx={{ flexGrow: 0 }}>
-						<Tooltip title='Open settings'>
-							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-								<Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+						<Typography>Balance: {user.balance}</Typography>
+					</Box>
+					<Box ml={'20px'} sx={{ flexGrow: 0 }}>
+						<Tooltip title={user.email}>
+							<IconButton style={{ color: 'white' }} onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+								<Avatar />
 							</IconButton>
 						</Tooltip>
 						<Menu
@@ -124,6 +109,10 @@ function ResponsiveAppBar() {
 							open={Boolean(anchorElUser)}
 							onClose={handleCloseUserMenu}
 						>
+							<MenuItem key={user.email}>
+								<Typography textAlign='center'>{user.email}</Typography>
+							</MenuItem>
+							<Divider />
 							{settings.map((setting) => (
 								<MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
 									<Typography textAlign='center'>{setting}</Typography>
