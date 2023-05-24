@@ -1,21 +1,49 @@
-import { Button, Container, CssBaseline } from '@mui/material'
-import React, { Fragment } from 'react'
+import { Button, Container, CssBaseline, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import React, { Fragment, useEffect, useState } from 'react'
 import ResponsiveAppBar from '../../Common/CommonAppBar'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import Paper from '@mui/material/Paper'
+import { useGetAllItemsMutation } from '../../Reducer/Api/ItemApi'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../Reducer/Store'
+
+export type RowData = {
+	id: string
+	name: string
+	startPrice: number
+	currentPrice: number
+	duration: string
+	status: string
+	currentBidder?: string | null
+	author: string
+}
 
 const Dasbhoard = () => {
-	const rows = [
-		{ id: '1', name: 'Item 1', currentPrice: 10.0, duration: '1h' },
-		{ id: '2', name: 'Item 2', currentPrice: 120.0, duration: '1h' },
-		{ id: '3', name: 'Item 3', currentPrice: 130.0, duration: '1h' },
-		{ id: '4', name: 'Item 4', currentPrice: 140.0, duration: '1h' },
-	]
+	const [getAllItems, { data, isLoading }] = useGetAllItemsMutation()
+	const authUser = useSelector((state: RootState) => state.authUser)
+	const [rows, setRows] = useState<RowData[]>([])
+
+	useEffect(() => {
+		const getAllItemsResponse = async () => {
+			await getAllItems({ token: authUser.token! })
+		}
+		getAllItemsResponse()
+	}, [])
+
+	useEffect(() => {
+		if (data && data.length > 0) {
+			const mappedItems: RowData[] = data.map((item: any) => {
+				return {
+					id: item._id,
+					name: item.name,
+					status: item.status,
+					startPrice: item.startPrice,
+					currentPrice: item.currentPrice,
+					duration: item.duration,
+					author: item.author._id,
+				}
+			})
+			setRows(mappedItems)
+		}
+	}, [data, setRows])
 
 	return (
 		<Fragment>
