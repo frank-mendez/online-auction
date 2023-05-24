@@ -5,11 +5,13 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../Reducer/Store'
 import { logout } from '../Reducer/Features/authSlice'
+import { useNavigate } from 'react-router-dom'
 
 const settings = ['Create New Item', 'Deposit', 'Logout']
 
 function ResponsiveAppBar() {
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
 	const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
 	const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
 	const user = useSelector((state: RootState) => state.userDetails)
@@ -29,6 +31,10 @@ function ResponsiveAppBar() {
 		console.log('key', key)
 		if (key === 'Logout') {
 			dispatch(logout())
+		}
+
+		if (key === 'Create New Item') {
+			navigate('/create-item')
 		}
 		setAnchorElUser(null)
 	}

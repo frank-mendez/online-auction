@@ -6,6 +6,7 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from '../Reducer/Store'
 import ProtectedRoutes from './ProtectedRoutes'
+import CreateItem from '../Pages/CreateItem/CreateItem'
 
 interface RouteItem {
 	path: string
@@ -17,6 +18,7 @@ const MainRoutes = () => {
 	const rotues: RouteItem[] = [
 		{ path: '/', element: <ProtectedRoutes isAuthenticated={authUser.isAuthenticated} children={<Dasbhoard />} /> },
 		{ path: '/login', element: <Login /> },
+		{ path: '/create-item', element: <ProtectedRoutes isAuthenticated={authUser.isAuthenticated} children={<CreateItem />} /> },
 		{ path: '/register', element: <Register /> },
 	]
 
