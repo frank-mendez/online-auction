@@ -25,6 +25,14 @@ export const itemApi = createApi({
 				},
 			}),
 		}),
+		getItemDetails: builder.mutation({
+			query: (payload: { token: string; itemId: string }) => ({
+				url: `/details/${payload.itemId}`,
+				headers: {
+					Authorization: `Bearer ${payload.token}`,
+				},
+			}),
+		}),
 		getAllItems: builder.mutation({
 			query: (payload: { token: string }) => ({
 				url: `/`,
@@ -46,4 +54,4 @@ export const itemApi = createApi({
 	}),
 })
 
-export const { useCreateItemMutation, useBidItemMutation, useGetAllItemsMutation, useGetUserItemsMutation } = itemApi
+export const { useCreateItemMutation, useBidItemMutation, useGetAllItemsMutation, useGetUserItemsMutation, useGetItemDetailsMutation } = itemApi

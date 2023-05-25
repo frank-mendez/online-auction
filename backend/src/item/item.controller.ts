@@ -41,6 +41,17 @@ export class ItemController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get('details/:id')
+  async getItem(@Param('id') id: string): Promise<ItemDocument | Item> {
+    try {
+      const item = await this.itemService.getItem(id);
+      return item;
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get()
   async getAllItems(): Promise<ItemDocument[] | Item[]> {
     try {

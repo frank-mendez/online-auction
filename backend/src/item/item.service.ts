@@ -19,6 +19,15 @@ export class ItemService {
     }).save();
   }
 
+  async getItem(itemId: string): Promise<ItemDocument | Item> {
+    return await this.model
+      .findById(itemId)
+      .populate('author', ['email'])
+      .populate('currentBidder', ['email'])
+      .lean()
+      .exec();
+  }
+
   async getAllUserItem(id: string): Promise<ItemDocument[] | Item[]> {
     return await this.model
       .find({ author: id })

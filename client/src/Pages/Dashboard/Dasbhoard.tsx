@@ -16,6 +16,7 @@ import ResponsiveAppBar from '../../Common/CommonAppBar'
 import { useGetAllItemsMutation } from '../../Reducer/Api/ItemApi'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../Reducer/Store'
+import BidModal from './BidModal'
 
 export type RowData = {
 	id: string
@@ -33,13 +34,16 @@ const Dasbhoard = () => {
 	const [getAllItems, { data, isLoading }] = useGetAllItemsMutation()
 	const authUser = useSelector((state: RootState) => state.authUser)
 	const [rows, setRows] = useState<RowData[]>([])
+	const [open, setOpen] = useState<boolean>(false)
+	const [selectedItemId, setSelectedItemId] = useState<string | null>(null)
+	const userBalance = useSelector((state: RootState) => state.userDetails.balance)
 
 	useEffect(() => {
 		const getAllItemsResponse = async () => {
 			await getAllItems({ token: authUser.token! })
 		}
 		getAllItemsResponse()
-	}, [])
+	}, [userBalance])
 
 	useEffect(() => {
 		if (data && data.length > 0) {
@@ -58,6 +62,17 @@ const Dasbhoard = () => {
 			setRows(mappedItems)
 		}
 	}, [data, setRows])
+
+	const clickBidHandler = (id: string) => {
+		setOpen(true)
+		setSelectedItemId(id)
+	}
+
+	const handleClose = () => {
+		console.log('close')
+		setSelectedItemId(null)
+		setOpen(false)
+	}
 
 	return (
 		<Fragment>
@@ -98,7 +113,7 @@ const Dasbhoard = () => {
 										<TableCell>{row.status}</TableCell>
 										<TableCell>{row.owner}</TableCell>
 										<TableCell>
-											<Button disabled={row.status === 'Draft'} variant='contained' color='primary'>
+											<Button onClick={() => clickBidHandler(row.id)} disabled={row.status === 'Draft'} variant='contained' color='primary'>
 												Bid
 											</Button>
 										</TableCell>
@@ -108,6 +123,7 @@ const Dasbhoard = () => {
 						)}
 					</Table>
 				</TableContainer>
+				{selectedItemId && <BidModal open={open} handleClose={handleClose} itemId={selectedItemId} />}
 			</Container>
 		</Fragment>
 	)

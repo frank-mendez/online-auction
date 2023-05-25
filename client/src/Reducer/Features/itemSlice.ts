@@ -1,5 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+export interface ItemDetails {
+	_id: string
+	name: string
+	status: string
+	startPrice: number
+	currentPrice: number
+	duration: string
+	author: Author
+	createdAt: string
+	updatedAt: string
+	__v: number
+	currentBidder: Author
+}
+
+export interface Author {
+	_id: string
+	email: string
+}
+
+export interface Author {
+	_id: string
+	email: string
+}
+
 export type Items = {
 	name: string
 	status: string
@@ -24,10 +48,12 @@ export type BidItemDto = {
 
 type ItemState = {
 	items: Items[]
+	currentItem?: ItemDetails | null
 }
 
 const initialState: ItemState = {
 	items: [],
+	currentItem: null,
 }
 
 export const itemSlice = createSlice({
@@ -39,9 +65,14 @@ export const itemSlice = createSlice({
 
 			state.items = payload.data.items
 		},
+		setCurrentItem: (state, action) => {
+			const { payload } = action
+
+			state.currentItem = payload
+		},
 	},
 })
 
-export const { setItems } = itemSlice.actions
+export const { setItems, setCurrentItem } = itemSlice.actions
 
 export default itemSlice.reducer
